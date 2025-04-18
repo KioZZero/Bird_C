@@ -11,6 +11,7 @@ int main(int ac, char **av)
 {
     if (ac != 1)
         exit(84);
+    system("clear");
     game_start();
     exit(0);
 }

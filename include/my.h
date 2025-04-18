@@ -12,5 +12,10 @@
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdbool.h>
+    #include <conio.h>
+typedef struct bird_s {
+    bool alive;
+    int y;
+} brid_t;
 void game_start(void);
 #endif /* !MY_H_ */

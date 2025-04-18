@@ -6,61 +6,92 @@
 */
 
 #include "my.h"
+#define WIDTH 100
+#define HEIGHT 20
+
 
 void display_board(char **board)
 {
-    int x = 10;
-    int y = 20;
+    int x = HEIGHT;
+    int y = WIDTH;
 
     for (int i = 0; i != x; i++){
         for (int j = 0; j != y; j++){
             printf("%c", board[i][j]);
         }
-    printf("\n");
+    printf("|\n");
     }
 }
 
-char **init_board(void)
+char **init_board(int h)
 {
-    int x = 10;
-    int y = 20;
+    int x = HEIGHT;
+    int y = WIDTH;
     char **board = malloc(sizeof(char *) * x);
 
     for (int i = 0; i < x; i++) {
         board[i] = malloc(sizeof(char) * y);
         for (int j = 0; j != y; j++){
-            if (i == x / 2 - 1 && j == y / 2 - 1)
+            if (i == h && j == y / 2 - 1)
                 board[i][j] = 'O';
             else
-                board[i][j] = '.';
+                board[i][j] = ' ';
         }
     }
     return board;
 }
 
-void update_board(char ***board)
+char **update_board(char **board, int h)
 {
-    int x = 10;
-    int y = 20;
-    int i = 0;
+    int x = HEIGHT;
+    int y = WIDTH;
 
     for (int i = 0; i != x; i++){
         for (int j = 0; j != y; j++){
+            if (i == h && j == y / 2 - 1)
+                board[i][j] = 'O';
+            else
+            board[i][j] = ' ';
         }
     }
-    return;
+    return board;
+}
+
+brid_t *init_bird()
+{
+    brid_t *bird = malloc(sizeof(bird));
+
+    bird->alive = true;
+    bird->y = HEIGHT / 2;
+
+    return bird;
+}
+
+static void sleep_ms(int milliseconds)
+{
+    usleep(milliseconds * 1000);
 }
 
 void game_start(void)
 {
-    char **board = init_board();
+    brid_t *bird = init_bird();
+    char **board = init_board(bird->y);
     bool running = true;
 
-    while (running){
+    while (bird->alive){
+        if ( _kbhit()){
+            bird->y--;
+            ch = '0';
+        } else { 
+            bird->y++;
+        }
+        if (bird->y == HEIGHT)
+            bird->alive = false;
+        printf("%d\n",bird->y);
+        board = update_board(board, bird->y);
+        system("clear");
         display_board(board);
-        update_board(&board);
-        sleep(1);
-        running = false;
+        sleep_ms(500);
     }
 
     for (int i = 0; i < 10; i++)
