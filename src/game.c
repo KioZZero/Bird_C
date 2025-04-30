@@ -1,65 +1,17 @@
 /*
 ** EPITECH PROJECT, 2024
-** ###
+** Basic Terminal Game
 ** File description:
 ** main.c
 */
 
 #include "my.h"
-#define WIDTH 100
-#define HEIGHT 20
 
-
-void display_board(char **board)
+bird_t *init_bird()
 {
-    int x = HEIGHT;
-    int y = WIDTH;
-
-    for (int i = 0; i != x; i++){
-        for (int j = 0; j != y; j++){
-            printf("%c", board[i][j]);
-        }
-    printf("|\n");
-    }
-}
-
-char **init_board(int h)
-{
-    int x = HEIGHT;
-    int y = WIDTH;
-    char **board = malloc(sizeof(char *) * x);
-
-    for (int i = 0; i < x; i++) {
-        board[i] = malloc(sizeof(char) * y);
-        for (int j = 0; j != y; j++){
-            if (i == h && j == y / 2 - 1)
-                board[i][j] = 'O';
-            else
-                board[i][j] = ' ';
-        }
-    }
-    return board;
-}
-
-char **update_board(char **board, int h)
-{
-    int x = HEIGHT;
-    int y = WIDTH;
-
-    for (int i = 0; i != x; i++){
-        for (int j = 0; j != y; j++){
-            if (i == h && j == y / 2 - 1)
-                board[i][j] = 'O';
-            else
-            board[i][j] = ' ';
-        }
-    }
-    return board;
-}
-
-brid_t *init_bird()
-{
-    brid_t *bird = malloc(sizeof(bird));
+    bird_t *bird = malloc(sizeof(bird_t));
+    if (!bird)
+        return NULL;
 
     bird->alive = true;
     bird->y = HEIGHT / 2;
@@ -67,35 +19,33 @@ brid_t *init_bird()
     return bird;
 }
 
-static void sleep_ms(int milliseconds)
-{
-    usleep(milliseconds * 1000);
-}
-
 void game_start(void)
 {
-    brid_t *bird = init_bird();
-    char **board = init_board(bird->y);
-    bool running = true;
+    bird_t *bird = init_bird();
+    int c;
 
-    while (bird->alive){
-        if ( _kbhit()){
-            bird->y--;
-            ch = '0';
-        } else { 
+    initscr();
+    timeout(500);
+    while (bird->alive) {
+        c = getch();
+
+        if (c == 'q' || c == 'Q') {
+            bird->alive = false;
+        } else if (c == ' ') {
+            bird->y -= 2;
+        } else {
             bird->y++;
         }
-        if (bird->y == HEIGHT)
-            bird->alive = false;
-        printf("%d\n",bird->y);
-        board = update_board(board, bird->y);
-        system("clear");
-        display_board(board);
-        sleep_ms(500);
-    }
 
-    for (int i = 0; i < 10; i++)
-        free(board[i]);
-    free(board);
+        if (bird->y < 0 || bird->y >= HEIGHT)
+            bird->alive = false;
+    }
+    endwin();
+
+    free(bird);
 }
 
+// static void sleep_ms(int milliseconds)
+// {
+//     usleep(milliseconds * 1000);
+// }

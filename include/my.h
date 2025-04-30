@@ -12,10 +12,17 @@
     #include <unistd.h>
     #include <stdlib.h>
     #include <stdbool.h>
-    #include <conio.h>
+    #include <ncurses.h>
+    #include <time.h>
+    #define WIDTH 150
+    #define HEIGHT 50
+typedef struct tower_s {
+    int x;
+    int y;
+} tower_t;
 typedef struct bird_s {
     bool alive;
     int y;
-} brid_t;
+} bird_t;
 void game_start(void);
 #endif /* !MY_H_ */

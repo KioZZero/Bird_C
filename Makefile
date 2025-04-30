@@ -7,7 +7,7 @@
 
 NAME	=	A_bird
 
-CFLAGS 	=	-Iinclude
+CFLAGS 	=	-Iinclude 
 
 SRC	=	./src/main.c \
         ./src/game.c \
@@ -17,7 +17,7 @@ OBJECTS	=	$(SRC:.c=.o)
 all:	compilation
 
 compilation:	$(OBJECTS)
-	gcc $(OBJECTS) -o $(NAME) $(LIBS)
+	gcc $(OBJECTS) -o $(NAME) $(LIBS) -lncurses
 
 clean:
 	rm	-f	$(OBJECTS)
