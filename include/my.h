@@ -16,12 +16,15 @@
     #include <time.h>
     #define WIDTH 150
     #define HEIGHT 50
+    #define OPENING_LENGTH 9
+    #define WAIT 200
 typedef struct tower_s {
-    int x;
-    int y;
+    int position_x;
+    int opening_y;
 } tower_t;
 typedef struct bird_s {
     bool alive;
+    int x;
     int y;
 } bird_t;
 void game_start(void);
