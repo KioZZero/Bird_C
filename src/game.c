@@ -7,18 +7,18 @@
 
 #include "my.h"
 
-void display_tower_tower(tower_t*tower)
+void display_tower_tower(tower_t *tower)
 {
     for (int i = 0; i != HEIGHT; i++){
         if (i < tower->opening_y - OPENING_LENGTH / 2
-            || i > tower->opening_y + OPENING_LENGTH / 2 ){
-            mvprintw(i , tower->position_x, "#");
-            mvprintw(i , tower->position_x + 1, "#");
-            mvprintw(i , tower->position_x + 2, "#");
-            mvprintw(i , tower->position_x + 3, "#");
-            mvprintw(i , tower->position_x - 1, "#");
-            mvprintw(i , tower->position_x - 2, "#");
-            mvprintw(i , tower->position_x - 3, "#");
+            || i > tower->opening_y + OPENING_LENGTH / 2){
+            mvprintw(i, tower->position_x, "#");
+            mvprintw(i, tower->position_x + 1, "#");
+            mvprintw(i, tower->position_x + 2, "#");
+            mvprintw(i, tower->position_x + 3, "#");
+            mvprintw(i, tower->position_x - 1, "#");
+            mvprintw(i, tower->position_x - 2, "#");
+            mvprintw(i, tower->position_x - 3, "#");
         }
     }
 }
@@ -26,20 +26,19 @@ void display_tower_tower(tower_t*tower)
 void display_elements(bird_t *bird, tower_t *tower)
 {
     int i;
-    clear();
 
-    for (int i = 0; i != HEIGHT; i++){
-        mvprintw(i , WIDTH, "|");
-    }
+    clear();
+    for (int i = 0; i != HEIGHT; i++)
+        mvprintw(i, WIDTH, "|");
     for (int i = 0; i != WIDTH; i++){
-        mvprintw(HEIGHT , i, "_");
+        mvprintw(HEIGHT, i, "_");
         if (i == tower->position_x)
             display_tower_tower(tower);
     }
     mvprintw(bird->y, bird->x, "O");
 }
 
-tower_t *init_tower()
+tower_t *init_tower(void)
 {
     tower_t *tower = malloc(sizeof(tower));
 
@@ -50,30 +49,28 @@ tower_t *init_tower()
     return tower;
 }
 
-bird_t *init_bird()
+bird_t *init_bird(void)
 {
     bird_t *bird = malloc(sizeof(bird_t));
 
     if (!bird)
         exit(84);
-
     bird->alive = true;
     bird->y = HEIGHT / 2;
     bird->x = WIDTH / 2;
-
     return bird;
 }
 
 void print_game_over(void)
 {
-    
+    return;
 }
 
 static void sleep_ms(int milliseconds)
 {
     usleep(milliseconds * 1000);
+    return;
 }
-
 
 void game_start(void)
 {
@@ -85,7 +82,6 @@ void game_start(void)
     timeout(WAIT);
     while (bird->alive) {
         c = getch();
-
         if (c == 'a' || c == 'A')
             bird->alive = false;
         else if (c == 'q')
@@ -96,16 +92,13 @@ void game_start(void)
             bird->y -= 2;
         else
             bird->y++;
-
-        if (tower->position_x < 0 ){
+        if (tower->position_x < 0){
             tower->position_x = WIDTH;
             tower->opening_y = rand() % HEIGHT;
-        } else 
+        } else
             tower->position_x--;
-
         if (bird->y < 0 || bird->y >= HEIGHT)
             bird->alive = false;
-
         display_elements(bird, tower);
     }
     endwin();

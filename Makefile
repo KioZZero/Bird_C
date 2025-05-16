@@ -7,7 +7,7 @@
 
 NAME	=	A_bird
 
-CFLAGS 	=	-Iinclude 
+CFLAGS 	=	-Iinclude
 
 SRC	=	./src/main.c \
 		./src/get_term_size.c \

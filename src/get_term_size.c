@@ -10,6 +10,7 @@
 int get_size(int cas)
 {
     struct winsize win;
+
     ioctl(0, TIOCGWINSZ, &win);
     switch (cas){
         case 1:
