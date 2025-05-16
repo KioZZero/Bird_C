@@ -15,8 +15,10 @@ void display_tower_tower(tower_t*tower)
             mvprintw(i , tower->position_x, "#");
             mvprintw(i , tower->position_x + 1, "#");
             mvprintw(i , tower->position_x + 2, "#");
+            mvprintw(i , tower->position_x + 3, "#");
             mvprintw(i , tower->position_x - 1, "#");
             mvprintw(i , tower->position_x - 2, "#");
+            mvprintw(i , tower->position_x - 3, "#");
         }
     }
 }
@@ -62,6 +64,10 @@ bird_t *init_bird()
     return bird;
 }
 
+void print_game_over(void)
+{
+    
+}
 
 static void sleep_ms(int milliseconds)
 {
@@ -103,6 +109,6 @@ void game_start(void)
         display_elements(bird, tower);
     }
     endwin();
-
+    print_game_over();
     free(bird);
 }

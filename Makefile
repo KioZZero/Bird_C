@@ -10,6 +10,7 @@ NAME	=	A_bird
 CFLAGS 	=	-Iinclude 
 
 SRC	=	./src/main.c \
+		./src/get_term_size.c \
         ./src/game.c \
 
 OBJECTS	=	$(SRC:.c=.o)

@@ -13,10 +13,12 @@
     #include <stdlib.h>
     #include <stdbool.h>
     #include <ncurses.h>
+    #include <sys/ioctl.h>
     #include <time.h>
-    #define WIDTH 150
-    #define HEIGHT 50
-    #define OPENING_LENGTH 9
+int get_size(int cas);
+    #define WIDTH get_size(1)
+    #define HEIGHT get_size(2)
+    #define OPENING_LENGTH 7
     #define WAIT 200
 typedef struct tower_s {
     int position_x;
